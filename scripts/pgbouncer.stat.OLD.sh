@@ -7,8 +7,7 @@
 # localhost:6432:pgbouncer:zbx_monitor:<PASSWORD>
 # 127.0.0.1:6432:pgbouncer:zbx_monitor:<PASSWORD>
 
-if [ -f ~/.pgpass ];
-then
+if [ -f ~/.pgpass ]; then
 	username=$(head -n 1 ~/.pgpass |cut -d: -f4)
 else
 	username="postgres"
@@ -24,10 +23,11 @@ PARAM="$1"
 # for stats: avg_* requests
 db_name=$(echo $2 | cut -d: -f1);
 
-if [ '*' = "$hostname" ]; then hostname="127.0.0.1"; fi
+if [ '*' = "$hostname" ]; then
+	hostname="127.0.0.1";
+fi
 
 conn_param="-qAtX -F: --pset='footer=off' -h $hostname -p $port -U $username $dbname"
-
 
 case "$PARAM" in
 'avg_req' )
