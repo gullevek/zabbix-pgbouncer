@@ -20,11 +20,12 @@ if [ '*' = "$hostname" ]; then
 	hostname="127.0.0.1";
 fi
 
-# get db + username, no pgbouncer db or username allowed in pool list
+# just get db name, ignore user name, but skip out on all entries that have pgbouncer set in either
+# database or user name
 poollist=$(
 	psql -h $hostname -p $port -U $username -qAtX -F: --dbname=$dbname -c "show pools" |
-	cut -d: -f1,2 |
-	grep -v ^pgbounce| grep -v :pgbounce
+	cut -d: -f1 |
+	grep -v :pgbouncer
 );
 
 printf "{\n";
