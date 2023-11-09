@@ -77,6 +77,10 @@ except Exception as e:
 output = ''
 try:
     output, error = psql_command.communicate(sql_commands, timeout=10)
+    # if we got an error string back, abort with error
+    if error:
+        print(f"ZBX_NOTSUPPORTED: Connection error: {error}")
+        sys.exit()
 except subprocess.TimeoutExpired:
     psql_command.kill()
     print("ZBX_NOTSUPPORTED: Command timed out")
