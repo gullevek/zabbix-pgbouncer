@@ -74,6 +74,7 @@ try:
 except Exception as e:
     print(f"ZBX_NOTSUPPORTED: Could not prepare psql command, psql not installed or not in path? {e}")
     sys.exit()
+output = ''
 try:
     output, error = psql_command.communicate(sql_commands, timeout=10)
 except subprocess.TimeoutExpired:
