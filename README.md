@@ -5,7 +5,63 @@ Original: <https://github.com/lesovsky/zabbix-extensions/tree/master/files/pgbou
 Changes:
 Discover Service uses central call to call all stats in one set which are returned as JSON and then post processed
 
-Named as "PgBouncer Extended II"
+## How to setup
+
+- must have a user with a password setup to access the pgbouncer stats
+- zabbix user must have a home directory
+
+### Confirm that zabbix user had a homedirectory
+
+```sh
+cat /etc/passwd | grep zabbix | cut -d ":" -f6
+```
+
+This should return something like `/var/lib/zabbix`. If not the zabbix user needs a home directory set
+
+### Add .pgpass to the zabbix home directory
+
+```ini
+127.0.0.1:6432:pgbouncer:<User>:<Password>
+```
+
+The 'User' must be in the list of 'stats_users' in the `pgbouncer.ini`
+
+Set the owner `.pgass` file to 'zabbix' and the chmod has to be at leat 600 or lower
+
+```sh
+chown zabbix: /var/lib/zabbix/.pgpass
+chmod 600 /var/lib/zabbix/.pgpass
+```
+
+Confirm that the settings are correct with
+
+```sh
+sudo -u zabbix psql -U <User> -p 6432 -h 127.0.0.1 pgbouncer
+```
+
+### File copy
+
+- copy 'pgbouncer.stat.py' to '/etc/zabbix/scripts/'
+- copy 'userparameter_pgbouncer.conf' to '/etc/zabbix/zabbix_agentd.conf.d/'
+
+and then restart the zabbix agent
+
+Import the 'pgbouncer-extended-template.xml' in the Zabbix Template directory
+
+Configuration -> Templates -> Import (top upper right corner)
+
+#### Confirm stats scripts work
+
+```sh
+sudo -u zabbix /etc/zabbix/scripts/pgbouncer.stat.py discovery
+```
+
+should print out the list of pools currently available
+
+### Final setup
+
+Add the template 'Template App PGBouncer Extended' to the host where needed.
+No further settings are needed.
 
 ## PgBouncer stats comments
 
@@ -17,18 +73,21 @@ SHOW DNS_HOSTS|DNS_ZONES
 SHOW STATS|STATS_TOTALS|STATS_AVERAGES|TOTALS
 ```
 
-## What to use
+## What is used
 
 `;stats_period = 60` for status update period (in seconds)
+
+Used:
 
 - stats
 - pools
 - lists
-
-- databases (for various base settings), but only avaiable on active connection
-
-- mem: subject to change
 - state: for active/etc check
+
+Not used:
+
+- databases (for various base settings), but only avaiable on active connection -> not used
+- mem: subject to change -> not used
 
 ignore `STATS_TOTALS`, `STATS_AVERAGES` and `TOTALS` as they have "pgbouncer" table inside, we do not want that
 
