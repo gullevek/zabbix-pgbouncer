@@ -14,6 +14,7 @@ import json
 import os
 import configparser
 import subprocess
+from typing import Any
 
 
 def main():
@@ -108,7 +109,7 @@ def main():
     # just colelct pool data and exist
     if discovery is True:
         next_header = False
-        pgbouncer_pool_list = {
+        pgbouncer_pool_list: dict[str, list[dict[str, str]]] = {
             'data': []
         }
         for line in output.split("\n"):
@@ -169,7 +170,7 @@ def main():
         "avg_wait_time": 0,
     }
 
-    pgbouncer_stats = {
+    pgbouncer_stats: dict[str, Any] = {
         "database": {},
         "total": {
             "general": {},
@@ -187,7 +188,7 @@ def main():
         "version": "",
     }
 
-    header = []
+    header: list[str] = []
     next_header = False
     current_command = ''
     # for line in sys.stdin.readlines():
