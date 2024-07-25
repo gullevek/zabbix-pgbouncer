@@ -1,0 +1,23 @@
+[tool.pyright]
+typeCheckingMode = "strict"
+reportMissingImports = "information"
+reportMissingTypeStubs = "information"
+reportUnknownMemberType = "information"
+[tool.ruff]
+line-length = 120
+[tool.black]
+# set 10 short for better formatting
+line-length = 110
+# to avoid " ... " " ... " string sets
+# experimental-string-processing = true
+preview = true
+enable-unstable-feature = ["string_processing"]
+[tool.pylint.format]
+max-line-length = 120
+# [tool.pylint.TYPECHECK]
+# generated-members=""
+[tool.pylint.miscellaneous]
+notes = ["FIXME", "TODO"]
+notes-rgx = '(FIXME|TODO)(\((TTD-|#)\[0-9]+\))'
+[tool.flake8]
+max-line-length = 120
