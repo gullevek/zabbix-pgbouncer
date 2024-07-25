@@ -159,6 +159,7 @@ def main():
     }
 
     pgbouncer_total_sum = {
+        "avg_server_assignment_count": 0,
         "avg_xact_count": 0,
         "avg_query_count": 0,
         "avg_recv": 0,
