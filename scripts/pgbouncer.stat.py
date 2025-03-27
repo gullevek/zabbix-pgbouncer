@@ -160,9 +160,12 @@ def main():
     }
 
     pgbouncer_total_sum = {
+        "avg_client_parse_count": 0,
+        "avg_server_parse_count": 0,
         "avg_server_assignment_count": 0,
         "avg_xact_count": 0,
         "avg_query_count": 0,
+        "avg_bind_count": 0,
         "avg_recv": 0,
         "avg_sent": 0,
         "avg_xact_time": 0,
@@ -234,12 +237,15 @@ def main():
                 pgbouncer_stats['database'][entries[0]] = {}
             pgbouncer_stats['database'][entries[0]]['pools'] = {}
             for i in range(2, len(entries)):
-                # unless poolmode -> all int
+                # unless pool mode -> all int
+                _value: str | int = 0
                 if header[i] == 'pool_mode':
-                    value = entries[i]
+                    _value = entries[i]
+                elif entries[i]:
+                    _value = int(entries[i])
                 else:
-                    value = int(entries[i])
-                pgbouncer_stats['database'][entries[0]]['pools'][header[i]] = value
+                    _value = 0
+                pgbouncer_stats['database'][entries[0]]['pools'][header[i]] = _value
         elif current_command == 'show lists;':
             # total data
             if entries[0] not in pgbouncer_total:
