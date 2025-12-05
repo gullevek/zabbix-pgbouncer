@@ -1,17 +1,27 @@
 [project]
 name ="zabbix-pgbouncer-extended-II"
+version = "1.2.0"
 description = "Zabbix plugin for monitoring PgBouncer connections"
-requires-python = ">=3.11"
 authors = [
 	{name="Clemens Schwaighofer", email = "clemens.schwaighofer@omc.com"}
 ]
-readme = "ReadMe.md"
+readme = "README.md"
+requires-python = ">=3.13"
 classifiers = [
 	"Development Status :: 5 - Production/Stable",
 	"Intended Audience :: System Administrators",
-	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.13",
 ]
-dynamic = ["version", "dependencies"]
+
+dependencies = []
+
+[project.scripts]
+pgbouncer-stat = "zabbix_pgbouncer_extended_ii.pgbouncer_stat:main"
+
+[build-system]
+requires = ["uv_build>=0.9.8,<0.10.0"]
+build-backend = "uv_build"
+
 [tool.pyright]
 typeCheckingMode = "strict"
 reportMissingImports = "information"
@@ -35,3 +45,7 @@ notes = ["FIXME", "TODO"]
 notes-rgx = '(FIXME|TODO)(\((TTD-|#)\[0-9]+\))'
 [tool.flake8]
 max-line-length = 120
+
+[tool.pylint.MASTER]
+# this is for the tests/etc folders
+init-hook='import sys; sys.path.append("scripts/")'

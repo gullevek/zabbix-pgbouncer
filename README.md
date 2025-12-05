@@ -41,8 +41,8 @@ sudo -u zabbix psql -U <User> -p 6432 -h 127.0.0.1 pgbouncer
 
 ### File copy
 
-- copy 'pgbouncer.stat.py' to '/etc/zabbix/scripts/'
-- copy 'userparameter_pgbouncer.conf' to '/etc/zabbix/zabbix_agentd.conf.d/'
+- copy 'scripts/pgbouncer.stat.py' to '/etc/zabbix/scripts/'
+- copy 'zabbix_agentd.conf.d/userparameter_pgbouncer.conf' to '/etc/zabbix/zabbix_agentd.conf.d/' (or '/etc/zabbix/zabbix_agentd.d/')
 
 and then restart the zabbix agent
 
