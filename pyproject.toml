@@ -1,6 +1,6 @@
 [project]
 name ="zabbix-pgbouncer-extended-II"
-version = "1.2.0"
+version = "1.2.1"
 description = "Zabbix plugin for monitoring PgBouncer connections"
 authors = [
 	{name="Clemens Schwaighofer", email = "clemens.schwaighofer@omc.com"}
