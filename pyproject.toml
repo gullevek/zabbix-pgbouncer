@@ -1,3 +1,27 @@
+[project]
+name ="zabbix-pgbouncer-extended-II"
+version = "1.2.2"
+description = "Zabbix plugin for monitoring PgBouncer connections"
+authors = [
+	{name="Clemens Schwaighofer", email = "clemens.schwaighofer@omc.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+classifiers = [
+	"Development Status :: 5 - Production/Stable",
+	"Intended Audience :: System Administrators",
+	"Programming Language :: Python :: 3.13",
+]
+
+dependencies = []
+
+[project.scripts]
+pgbouncer-stat = "zabbix_pgbouncer_extended_ii.pgbouncer_stat:main"
+
+[build-system]
+requires = ["uv_build>=0.11.0,<0.12.0"]
+build-backend = "uv_build"
+
 [tool.pyright]
 typeCheckingMode = "strict"
 reportMissingImports = "information"
