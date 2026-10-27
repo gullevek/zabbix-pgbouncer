@@ -1,6 +1,6 @@
 [project]
 name ="zabbix-pgbouncer-extended-II"
-version = "1.2.1"
+version = "1.2.2"
 description = "Zabbix plugin for monitoring PgBouncer connections"
 authors = [
 	{name="Clemens Schwaighofer", email = "clemens.schwaighofer@omc.com"}
@@ -19,7 +19,7 @@ dependencies = []
 pgbouncer-stat = "zabbix_pgbouncer_extended_ii.pgbouncer_stat:main"
 
 [build-system]
-requires = ["uv_build>=0.9.8,<0.10.0"]
+requires = ["uv_build>=0.11.0,<0.12.0"]
 build-backend = "uv_build"
 
 [tool.pyright]

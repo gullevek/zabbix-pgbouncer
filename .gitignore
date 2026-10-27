@@ -8,5 +8,7 @@ wheels/
 
 # Virtual environments
 .venv
-# uv lock file
-uv.lock
+
+# Pytest coverate
+.coverage
+

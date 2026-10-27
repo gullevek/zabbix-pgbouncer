@@ -31,7 +31,7 @@ def main():
     # get either ~/.pgpass OR /etc/pgbouncer/pgbouncer.ini, else abort with "ZBX_NOTSUPPORTED"
     if os.path.isfile(file_pg_pass) and os.access(file_pg_pass, os.R_OK):
         with open(file_pg_pass, 'r', encoding="utf-8") as fp:
-            for line in fp.readlines():
+            for line in fp:
                 if ':pgbouncer:' in line and not username:
                     entries = line.split(':')
                     hostname = entries[0]
@@ -161,6 +161,7 @@ def main():
 
     pgbouncer_total_sum = {
         "avg_client_parse_count": 0,
+        "avg_client_login_count": 0,
         "avg_server_parse_count": 0,
         "avg_server_assignment_count": 0,
         "avg_xact_count": 0,
@@ -248,10 +249,7 @@ def main():
                 pgbouncer_stats['database'][entries[0]]['pools'][header[i]] = _value
         elif current_command == 'show lists;':
             # total data
-            if entries[0] not in pgbouncer_total:
-                group = 'general'
-            else:
-                group = pgbouncer_total[entries[0]]
+            group = pgbouncer_total.get(entries[0], 'general')
             # print(f"LIST, Group: {group}");
             pgbouncer_stats['total'][group][entries[0]] = entries[1]
         elif current_command == 'show mem;':
